@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./vue.js"></script>
+    <title>Vue.js</title>
+</head>
+
+<body>
+
+    <!--
+  Utilizando a api:
+  https://viacep.com.br/ws/04538133/json/
+  Mostre o cep, logradouro, complemento, bairro, localidade e uf do que for retornado.
+
+  
+  Use o arquivo json da aula, para listar os cursos e as matérias.
+-->
+
+    <div id="app">
+        <input v-model="cep">
+        <button @click="getCep()" v-if="cep.length >= 8">Consultar Cep</button>
+        <p>Cep: {{dadosCep.cep}}</p>
+        <p>Logradouro: {{dadosCep.logradouro}}</p>
+        <p>Logradouro: {{dadosCep.localidade}}</p>
+        <p>Logradouro: {{dadosCep.uf}}</p>
+    </div>
+
+
+    <script>
+
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                dadosCep: {},
+                cep: ''
+            },
+
+            methods: {
+                getCep() {
+                    let urlApi = `https://viacep.com.br/ws/${this.cep}/json/`
+                    const options = {
+                        method: 'GET'
+                    }
+                    fetch(urlApi, options)
+                        .then((resp) => {
+                            if (resp.status == 200) {
+                                resp.json()
+                                    .then((data) => { this.dadosCep = data });
+                            } else {
+                                throw new Error('Something went wrong');
+                            }
+
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                        })
+
+                },
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>
