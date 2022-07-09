@@ -12,33 +12,43 @@
 <body>
 
     <div id="app">
-       {{ferramenta}}
+       <h1>{{instrumento}} {{cor}}</h1>
     </div>
-
-    <div id="app2">
-        {{instrumento}}
-     </div>
 
 
 
     <script>
 
+        function VueClone(options) {
+            this.options = options
+            this.el = document.querySelector(options.el)
+        }
+
+        const vmClone = new VueClone({
+            el:'#app2',
+            data: {
+                titulo: "Vue"
+            }
+        })
+
 
         const vm = new Vue({
             el: "#app",
             data:{
-                ferramenta: 'martelo'
+                instrumento: 'violao',
+                cor: 'vermelho'
+            },
+            computed:{
+                nomeProduto(){
+                    return this.instrumento + this.cor
+                }
             }
+          
+
         })
 
-        const vm2 = new Vue({
-            el: "#app2",
-            data:{
-               instrumento: 'violao'
-            }
-        })
+        console.log(vm)
 
-      
     </script>
 
 </body>

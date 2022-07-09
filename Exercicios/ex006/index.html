@@ -21,7 +21,7 @@
 -->
 
     <div id="app">
-        <input v-model="cep">
+        <input v-model="cep" maxlength="8" placeholder="cep">
         <button @click="getCep()" v-if="cep.length >= 8">Consultar Cep</button>
         <p>Cep: {{dadosCep.cep}}</p>
         <p>Logradouro: {{dadosCep.logradouro}}</p>
