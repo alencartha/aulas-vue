@@ -10,12 +10,14 @@
 <body>
 
     <div id="app">
-        <button @click='incrementar'> Incrementar</button>
-        <button @click='diminuir'> Diminuir</button>
-        {{total}}
+       {{total}}
+       <button @click="incrementar">Incrementar</button>
+       <button @click="diminuir">Diminuir</button>
 
-        <button @click='mudarCompra(compra)'>mudar compra</button>
-        <p>{{compra}}</p>
+       <h2>Instrumento</h2>
+       <p>{{instrumento}}</p>
+       <button @click="mudarNome('violão')">Mudar nome</button>
+       <button @click="verEvento">Evento</button>
     </div>
 
 
@@ -24,21 +26,28 @@
          const vm = new Vue({
             el:"#app",
             data:{
+                preco: 69,
                 total: 0,
-                compra: ''
+                instrumento: ''
             },
             methods:{
                 incrementar(){
                     this.total ++
+                    this.teste()
                 },
                 diminuir(){
                     this.total --
                 },
-                mudarCompra(instrumento){
-                    this.compra = instrumento
+                mudarNome(instrumento){
+                    this.instrumento = instrumento
+                },
+                verEvento(event){
+                    console.log(event)
+                },
+                teste(){
+                    console.log('método ativado')
                 }
             }
-
          })
 
     </script>
