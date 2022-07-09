@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./vue.js"></script>
+    <title>Vue.js</title>
+
+
+</head>
+
+<body>
+
+    <!--
+  Utilizando as API's
+  https://api.origamid.dev/stock/aapl/quote
+  https://api.origamid.dev/stock/googl/quote
+
+  - Compare o marketCap (valor de
+  mercado) entre ambas.
+
+  - Mostre o nome das empresas e o valor
+  na interace (companyName e marketCap).
+
+  - Mude a cor para verde o nome da empresa com
+  maior marketCap e vermelho a com menor.
+-->
+
+    <style>
+        .colorRed {
+            color: red
+        }
+
+        .colorGreen {
+            color: green;
+        }
+    </style>
+
+    <div id="app">
+
+        <h1>Empresas</h1>
+
+        <div style="display: flex; width: 80%; justify-content: space-between;">
+
+            <div>
+                <h2 :class="dataApple.marketCap > dataGoogle.marketCap? 'colorGreen': 'colorRed' ">Nome empresa:
+                    {{dataApple.companyName}}</h2>
+                <h3>MarketCap: {{dataApple.marketCap}} </h3>
+            </div>
+
+            <div>
+                <h2 :class="dataGoogle.marketCap > dataApple.marketCap? 'colorGreen': 'colorRed' ">Nome empresa:
+                    {{dataGoogle.companyName}}</h2>
+                <h3>MarketCap: {{dataGoogle.marketCap}} </h3>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script>
+
+
+
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                dataApple: {},
+                dataGoogle: {},
+                urlApiApple: 'https://api.origamid.dev/stock/aapl/quote',
+                urlApiGoogle: 'https://api.origamid.dev/stock/googl/quote',
+
+
+            },
+            methods: {
+                fetchApiApple() {
+                    const options = {
+                        method: 'GET'
+                    }
+                    fetch(this.urlApiApple, options)
+                        .then((resp) => {
+                            if (resp.status == 200) {
+                                resp.json()
+                                    .then((data) => { this.dataApple = data });
+                            } else {
+                                throw new Error('Something went wrong');
+                            }
+
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                        })
+
+                },
+                fetchApiGoogle() {
+                    const options = {
+                        method: 'GET'
+                    }
+                    fetch(this.urlApiGoogle, options)
+                        .then((resp) => {
+                            if (resp.status == 200) {
+                                resp.json()
+                                    .then((data) => { this.dataGoogle = data });
+                            } else {
+                                throw new Error('Something went wrong');
+                            }
+
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                        })
+
+                },
+
+            }
+        })
+
+        vm.fetchApiApple()
+        vm.fetchApiGoogle()
+
+    </script>
+
+</body>
+
+</html>
